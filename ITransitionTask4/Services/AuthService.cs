@@ -31,7 +31,7 @@
                 {
                     using var scope = _serviceScopeFactory.CreateScope();
                     var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
-                    var resetLink = $"http://localhost:5173/reset-password?token={user.PasswordResetToken}";
+                    var resetLink = $"http://82.208.22.154/reset-password?token={user.PasswordResetToken}";
                     await emailService.SendEmailAsync(
                         user.Email,
                         "Reset your password",
@@ -97,7 +97,7 @@
                 {
                     using var scope = _serviceScopeFactory.CreateScope();
                     var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
-                    var verificationLink = $"http://localhost:5173/verify-email?token={user.VerificationToken}";
+                    var verificationLink = $"http://82.208.22.154/verify-email?token={user.VerificationToken}";
                     await emailService.SendEmailAsync(
                         user.Email,
                         "Verify Your Email",
