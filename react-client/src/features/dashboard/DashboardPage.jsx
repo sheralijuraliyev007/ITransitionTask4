@@ -59,31 +59,44 @@ export default function DashboardPage() {
     }
 
   async function handleAction(action) {
-    if (selected.length === 0) return;
-    setMessage("");
-    setError("");
-    try {
-      if (action === "block")
-        await axios.post(`${API_URL}/block`, selected, authHeaders());
-      else if (action === "unblock")
-        await axios.post(`${API_URL}/unblock`, selected, authHeaders());
-      else if (action === "delete")
-        await axios.delete(`${API_URL}/delete`, { ...authHeaders(), data: selected });
-      else if (action === "deleteUnverified")
-        await axios.delete(`${API_URL}/deleteunverified`, { ...authHeaders(), data: selected });
+  if (selected.length === 0) return;
+  setMessage("");
+  setError("");
+  try {
+    if (action === "block")
+      await axios.post(`${API_URL}/block`, selected, authHeaders());
+    else if (action === "unblock")
+      await axios.post(`${API_URL}/unblock`, selected, authHeaders());
+    else if (action === "delete")
+      await axios.delete(`${API_URL}/delete`, { ...authHeaders(), data: selected });
+    else if (action === "deleteUnverified")
+      await axios.delete(`${API_URL}/deleteunverified`, { ...authHeaders(), data: selected });
 
-      setMessage("Action completed successfully.");
-      setSelected([]);
-      fetchUsers();
-    } catch (err) {
-      if (err.response?.status === 401) {
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        navigate("/login");
-        return;}
-      setError("Action failed.");
+    setMessage("Action completed successfully.");
+    setSelected([]);
+
+    // ← ADD THIS: if current user was deleted, log out immediately
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const currentUserId = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    if (selected.includes(currentUserId) || selected.includes(Number(currentUserId))) {
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      navigate("/login");
+      return;
     }
+
+    fetchUsers();
+  } catch (err) {
+    if (err.response?.status === 401) {
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      navigate("/login");
+      return;
+    }
+    setError("Action failed.");
   }
+}
 
   function handleLogout() {
     localStorage.removeItem("token");
