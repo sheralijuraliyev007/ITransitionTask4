@@ -42,7 +42,7 @@ export default function RegisterPage() {
       navigate("/dashboard");
 
     } catch (err) {
-      // Note: server returns 400 with error message in body
+      
       setError(err.response?.data ?? "Registration failed. Please try again.");
     } finally {
       setLoading(false);

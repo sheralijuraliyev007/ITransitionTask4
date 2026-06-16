@@ -7,10 +7,10 @@ export default function VerifyEmailPage() {
   const [message, setMessage] = useState("Verifying your email...");
   const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
-  const called = useRef(false); // ← add this
+  const called = useRef(false); 
 
   useEffect(() => {
-    if (called.current) return; // ← prevent double call
+    if (called.current) return; 
     called.current = true;
 
     const token = searchParams.get("token");

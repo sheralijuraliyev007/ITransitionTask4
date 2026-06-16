@@ -19,7 +19,7 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchUsers();
     
-    // Note: refresh when user comes back to this tab
+    
     
 }, []);
 
@@ -47,7 +47,7 @@ export default function DashboardPage() {
   if (!token) return null;
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]; // ← email claim
+    return payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]; 
   } catch {
     return null;
   }
@@ -85,7 +85,7 @@ export default function DashboardPage() {
   if (!dateStr) return "—";
   const date = new Date(dateStr);
   const now = new Date();
-  const diff = Math.floor((now - date) / 1000); // seconds
+  const diff = Math.floor((now - date) / 1000); 
 
   if (diff < 60) return "Just now";
   if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
@@ -107,7 +107,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-vh-100 bg-light">
-      {/* Navbar */}
+      
       <nav className="navbar navbar-dark bg-dark px-3">
   <span className="navbar-brand mb-0 fs-6 fw-bold">User Management</span>
   <div className="d-flex align-items-center gap-3">
@@ -132,7 +132,7 @@ export default function DashboardPage() {
           <button type="button" className="btn-close btn-sm" onClick={() => setError("")}></button>
         </div>}
 
-        {/* Toolbar */}
+        
         <div className="d-flex flex-wrap gap-2 mb-3">
           <button className="btn btn-warning btn-sm" onClick={() => handleAction("block")}
             disabled={selected.length === 0} title="Block selected">
@@ -158,7 +158,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* Table */}
+        
         <div className="card shadow-sm">
           <div className="card-body p-0 table-responsive">
             <table className="table table-hover table-bordered mb-0">
@@ -188,7 +188,7 @@ export default function DashboardPage() {
                       <span className={user.status === 2 ? "text-decoration-line-through" : ""}>
                         {user.firstName} {user.lastName}
                       </span>
-                      {/* Note: show email under name on mobile since email column is hidden */}
+                      
                       <div className="d-md-none">
                         <small className="text-muted">{user.email}</small>
                       </div>
