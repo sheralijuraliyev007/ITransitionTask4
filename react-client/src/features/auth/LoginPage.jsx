@@ -12,9 +12,9 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
-  }
+  const { name, value, type, checked } = e.target;
+  setFormData(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+}
 
   async function handleSubmit(e) {
     e.preventDefault();

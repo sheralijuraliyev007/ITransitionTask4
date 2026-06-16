@@ -13,9 +13,9 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  }
+  const { name, value } = e.target;  
+  setFormData(prev => ({ ...prev, [name]: value }));
+}
 
   async function handleSubmit(e) {
     e.preventDefault();
