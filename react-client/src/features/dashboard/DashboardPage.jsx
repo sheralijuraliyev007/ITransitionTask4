@@ -28,9 +28,14 @@ export default function DashboardPage() {
       const { data } = await axios.get(`${API_URL}/getall`, authHeaders());
       setUsers(data);
     } catch (err) {
-      if (err.response?.status === 401) navigate("/login");
-      setError("Failed to load users.");
-    }
+  if (err.response?.status === 401) {
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    navigate("/login");
+    return;
+  }
+  setError("Failed to load users.");
+}
   }
 
   function toggleSelectAll(e) {
