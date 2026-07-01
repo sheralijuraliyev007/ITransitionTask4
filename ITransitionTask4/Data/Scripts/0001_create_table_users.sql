@@ -14,6 +14,4 @@ create table users(
     password_reset_token_expiry timestamptz null
 );
 
--- Important: unique index enforces email uniqueness at DB level
--- Note: this is separate from the primary key
 create unique index ux_user_email on users(email);
